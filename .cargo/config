@@ -1,4 +1,0 @@
-paths = ["riscv-example"]
-
-[build]
-target = "riscv32imac-unknown-none-elf"
