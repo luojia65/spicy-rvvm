@@ -1,5 +1,4 @@
 [workspace]
 members = [
     "spicy-rvvm",
-    "riscv-example"
 ]

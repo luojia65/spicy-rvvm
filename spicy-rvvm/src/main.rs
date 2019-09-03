@@ -13,9 +13,11 @@ fn main() {
             .help("path to the input RISC-V elf file"))
         .get_matches();
     let input_path_str = matches.value_of("elf-input-path").unwrap();
-    // println!("{}", input_path_str);
-    let file = OpenOptions::new().read(true).open(input_path_str)
+    let mut file = OpenOptions::new().read(true).open(input_path_str)
         .expect("open input file");
-    // todo
-    let _ = file;
+    let input_elf = elf::File::open_stream(&mut file)
+        .expect("open file as ELF input stream");
+    let text = input_elf.get_section(".text")
+        .expect("find text section");
+    println!("{:?}", text);
 }
