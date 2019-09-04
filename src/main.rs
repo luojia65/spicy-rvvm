@@ -1,8 +1,10 @@
-mod isa;
+pub mod isa;
+pub mod input;
+pub mod error;
+pub use error::{Error, Result};
 
 use clap::*;
 use std::fs::OpenOptions;
-use std::io::{Read, Seek, Cursor};
 
 fn main() {
     let matches = App::new("spicy-rvvm")
@@ -23,28 +25,8 @@ fn main() {
     let text_section = input_elf.get_section(".text")
         .expect("find text section");
     let data = &text_section.data;
-    let cursor = Cursor::new(data);
-    let input = ReadSeekInput::new(cursor);
-}
-
-struct ReadSeekInput<T> {
-    inner: T
-}
-
-impl<T> ReadSeekInput<T>
-where 
-    T: Read + Seek
-{
-    pub fn new(inner: T) -> Self {
-        Self { inner }
-    }
-}
-
-impl<T> ReadSeekInput<T> 
-where 
-    T: Read + Seek 
-{
-    pub fn next(&self) {
-        
+    let mut input = input::SliceInput::new(data);
+    while let Ok(ins) = input.next() {
+        println!("{:?}", ins);
     }
 }

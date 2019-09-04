@@ -2,6 +2,7 @@ pub mod i;
 
 use std::borrow::Borrow;
 
+#[derive(Debug)]
 pub struct Instruction {
     text_slice: [u8]
 }
