@@ -1,10 +1,10 @@
-use std::io::{Read, Seek};
+use std::io::{Read, Seek, SeekFrom};
 
 use crate::error::Result;
 use crate::isa;
 
 pub struct ReadSeekInput<T> {
-    inner: T
+    inner: T,
 }
 
 impl<T> ReadSeekInput<T>
@@ -38,6 +38,11 @@ where
         }
         Ok(buf)
     }
+
+    pub fn set_pc(&mut self, new_pc: usize) -> Result<()> {
+        self.inner.seek(SeekFrom::Start(new_pc as u64))?;
+        Ok(())
+    }
 }
 
 pub struct SliceInput<'a> {
@@ -63,6 +68,10 @@ impl<'a> SliceInput<'a> {
         let range = self.pc..(self.pc + length_bytes);
         self.pc += length_bytes;
         Ok(isa::Instruction::new(&self.slice[range]))
+    }
+
+    pub fn set_pc(&mut self, new_pc: usize) {
+        self.pc = new_pc;
     }
 }
 

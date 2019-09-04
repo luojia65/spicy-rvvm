@@ -28,12 +28,6 @@ impl InstructionOwned {
     }
 }
 
-impl Instruction {
-    pub fn execute(&self) {
-        unimplemented!()
-    }
-}
-
 impl ToOwned for Instruction {
     type Owned = InstructionOwned;
 
@@ -45,5 +39,11 @@ impl ToOwned for Instruction {
 impl Borrow<Instruction> for InstructionOwned {
     fn borrow(&self) -> &Instruction {
         Instruction::new(&self.text_vec)
+    }
+}
+
+impl Instruction {
+    pub fn execute(&self) {
+        unimplemented!()
     }
 }

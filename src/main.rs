@@ -11,13 +11,19 @@ fn main() {
         .version(crate_version!())
         .author(crate_authors!())
         .about(crate_description!())
-        .arg(Arg::with_name("elf-input-path")
-            .value_name("PATH")
+        .arg(Arg::with_name("target program")
             .takes_value(true)
             .required(true)
             .help("path to the input RISC-V elf file"))
+        .arg(Arg::with_name("isa")
+            .long("isa")
+            .value_name("name")
+            .require_equals(true)
+            .takes_value(true)
+            .default_value("RV64IMAFDC")
+            .help("RISC-V ISA string"))
         .get_matches();
-    let input_path_str = matches.value_of("elf-input-path").unwrap();
+    let input_path_str = matches.value_of("target program").unwrap();
     let mut file = OpenOptions::new().read(true).open(input_path_str)
         .expect("open input file");
     let input_elf = elf::File::open_stream(&mut file)
@@ -26,7 +32,10 @@ fn main() {
         .expect("find text section");
     let data = &text_section.data;
     let mut input = input::SliceInput::new(data);
-    while let Ok(ins) = input.next() {
-        println!("{:?}", ins);
+    loop {
+        if let Ok(ins) = input.next() {
+            println!("{:?}", ins);
+            // input.set_pc(0);
+        }
     }
 }
