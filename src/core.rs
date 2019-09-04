@@ -7,11 +7,14 @@ pub struct Core {
 }
 
 impl Core {
-    pub fn new() -> Core {
-        Core {
-            int_reg: [0; 32],
-            pc: 0
-        }
+    #[inline]
+    pub fn new() -> Self {
+        Self::with_initial_pc(0)
+    }
+
+    #[inline]
+    pub fn with_initial_pc(pc: u64) -> Self {
+        Self { int_reg: [0; 32], pc }
     }
 }
 
