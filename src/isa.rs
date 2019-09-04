@@ -1,4 +1,5 @@
 pub mod i;
+pub mod c;
 
 use std::borrow::Borrow;
 
@@ -32,7 +33,6 @@ impl ToOwned for Instruction {
 }
 
 impl Borrow<Instruction> for InstructionOwned {
-    
     fn borrow(&self) -> &Instruction {
         Instruction::new(&self.text_vec)
     }
