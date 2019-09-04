@@ -2,7 +2,7 @@ pub mod i;
 pub mod c;
 
 use std::borrow::Borrow;
-use crate::runtime;
+use crate::core;
 
 #[derive(Debug)]
 pub struct Instruction {
@@ -84,14 +84,14 @@ impl Type {
             Type::S { opcode, .. } => opcode,
             Type::B { opcode, .. } => opcode,
             Type::U { opcode, .. } => opcode,
-            Type::J { opcode, .. } => opcode,
+            Type::J { opcode, .. } => opcode, 
         }
     }
 
-    pub fn execute_on(&self, rt: &mut runtime::Runtime) {
+    pub fn execute_on(&self, core: &mut core::Core) {
         match *self {
             Type::I { opcode: _, rd, funct3: _, rs1, imm } => 
-                i::jalr(rt, rd, rs1, imm),
+                i::jalr(core, rd, rs1, imm),
             _ => unimplemented!()
         }
     }

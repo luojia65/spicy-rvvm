@@ -1,7 +1,7 @@
 pub mod isa;
 pub mod input;
 pub mod error;
-pub mod runtime;
+pub mod core;
 pub use error::{Error, Result};
 
 use clap::*;
@@ -33,11 +33,11 @@ fn main() {
         .expect("find text section");
     let data = &text_section.data;
     let mut input = input::SliceInput::new(data);
-    let mut runtime = runtime::Runtime::new();
+    let mut core = core::Core::new();
     loop {
         if let Ok(ins) = input.next() {
             println!("{:?}", ins);
-            runtime.execute(ins);
+            core.execute(ins);
         }
     }
 }

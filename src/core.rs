@@ -1,21 +1,21 @@
 use crate::isa;
 
 #[derive(Debug)]
-pub struct Runtime {
+pub struct Core {
     int_reg: [u64; 32],
     pc: u64,
 }
 
-impl Runtime {
-    pub fn new() -> Runtime {
-        Runtime {
+impl Core {
+    pub fn new() -> Core {
+        Core {
             int_reg: [0; 32],
             pc: 0
         }
     }
 }
 
-impl Runtime {
+impl Core {
     #[inline]
     pub fn set_pc(&mut self, new_pc: u64) {
         self.pc = new_pc;
@@ -39,7 +39,7 @@ impl Runtime {
     }
 }
 
-impl Runtime {
+impl Core {
     #[inline]
     pub fn execute(&mut self, ins: &isa::Instruction) {
         let ty = isa::Type::decode(ins);

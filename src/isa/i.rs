@@ -1,8 +1,8 @@
-use crate::runtime::Runtime;
+use crate::core::Core;
 
 #[inline]
-pub fn jalr(rt: &mut Runtime, rd: u8, rs1: u8, imm: i16) {
-    rt.set_int(rd, rt.pc() + 4);
-    rt.set_pc((rt.int(rs1) as i128 + imm as i128) as u64);
+pub fn jalr(core: &mut Core, rd: u8, rs1: u8, imm: i16) {
+    core.set_int(rd, core.pc() + 4);
+    core.set_pc((core.int(rs1) as i128 + imm as i128) as u64);
 }
 
