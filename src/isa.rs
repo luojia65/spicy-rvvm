@@ -18,6 +18,16 @@ impl Instruction {
     }
 }
 
+impl InstructionOwned {
+    pub fn new() -> Self {
+        InstructionOwned::new()
+    }
+
+    pub fn push(&mut self, byte: u8) {
+        self.text_vec.push(byte)
+    }
+}
+
 impl Instruction {
     pub fn execute(&self) {
         unimplemented!()
