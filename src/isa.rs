@@ -20,7 +20,7 @@ impl Instruction {
 
 impl InstructionOwned {
     pub fn new() -> Self {
-        InstructionOwned::new()
+        InstructionOwned { text_vec: Vec::new() }
     }
 
     pub fn push(&mut self, byte: u8) {
